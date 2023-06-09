@@ -3,16 +3,28 @@
 // For storing user's theme selection in cookies
 function storeTheme(themeName) {
     // Your code here
+    document.cookie = `theme=${themeName}; expires=${new Date(Date.now() + 31536000000).toUTCString()}; path=/`
 }
 
 // For restoring theme from cookies, if selected by the user in the past
 function restoreTheme() {
     // Your code here
+    cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const [name, value] = cookie.split('=');
+        if (name === 'theme') {
+            setTheme(value);
+            return;
+        }
+    }
+    setTheme('dragon');
 }
 
 // For clearing theme selection from cookies (reset to default)
 function clearTheme() {
     // Your code here
+    document.cookie = "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
 /* ================================ PHASE 3 ================================ */
@@ -20,16 +32,29 @@ function clearTheme() {
 // For storing user's display name in cookies
 function storeName(displayName) {
     // Your code here
+    document.cookie = `name=${displayName}; expires=${new Date(Date.now() + 31536000000).toUTCString()}; path=/`;
 }
 
 // For restoring user's display name from cookies, if set in the past
 function restoreName() {
     // Your code here
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const [name, value] = cookie.split('=');
+        if (name === 'name') {
+            setInputValue('display-name', value);
+            return;
+        }
+    }
+    // If there's no stored name, default to empty string
+    setInputValue('display-name', '');
 }
 
 // For clearing user's display name from cookies
 function clearName() {
     // Your code here
+    document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
 /* ========================================================================= */
